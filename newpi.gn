@@ -1,0 +1,29 @@
+ set term png size 1000,500 font "DejaVuSansCondensed,12" truecolor;
+ uns timestamp
+ set out "/home/pi/lussen/www/out.png"
+ set multi layout 1,2;
+ set size ratio -1
+set size square;
+ set key below;
+ set samples 10000;
+ set xtics 0.25
+ set obj 1 circle at 0.5,0 size 0.07 arc [120:180] fc black nowedge;
+ set label "60°" at 0.45,0.01;
+ p[0:0.5][0:0.5] sqrt(x)*sqrt(1-x) t "circle √x√(1-x)",\
+     sqrt(x) t "√x",\
+     sqrt(x)*(1-x/2)  t "√x(1-½x)",\
+     sqrt(x)*(1-x/2-x**2/8) t "√x(1-½x-⅛x²)",\
+     (x>0.25)?sqrt(3.)/4*(1-4*(x-0.25)):0 lt -1 not;
+uns obj 1;
+uns label;
+set size noratio;
+set size nosquare;
+set title "residue"
+#set key left top ;
+set xtics 0.05;
+ p[0:0.25][]\
+     0 t "circle",\
+     sqrt(x)-sqrt(x)*sqrt(1-x) t "√x",\
+     sqrt(x)*(1-x/2)-sqrt(x)*sqrt(1-x)  t "√x(1-½x)",\
+     sqrt(x)*(1-x/2-x**2/8)-sqrt(x)*sqrt(1-x) t "√x(1-½x-⅛x²)"
+uns multi;

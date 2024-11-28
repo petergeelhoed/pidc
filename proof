@@ -1,0 +1,39 @@
+there exists a T,N where 
+T²-1 = A·N² 
+for T,A,N elements of natural numbers
+
+(T-1)(T+1) = A·N²
+(T-1)(T+1)/A = N²
+
+four square theorem?
+
+T=N+M
+
+N²+2NM+M²-1 = A·N²
+2NM+M²-1 = (A-1)·N²
+
+
+
+
+T²= N²+N(N+1)+(N+1)(N+2)+ ... +(T-1)T
+T²= N²+ N²+N + N²+1·N+2·N+1·2 + N²+2·N+3·N+2·3+ 
+  = N²(T-N+1)+N·Σ_1^T-N-1(i) +N·Σ_2^T-N(i) +  + Σ_2^T-N(i·(i+1))  
+  = N²(T-N+1)-N²+N·Σ_1^T-N(i) -N+N·Σ_1^T-N(i) +  + Σ_2^T-N(i·(i+1))  
+  = N²(T-N+1)-N²-N +2 N·Σ_1^T-N(i) + Σ_2^T-N(i·(i+1))  
+  = N²(T-N)-N +2 N·Σ_1^T-N(i) + Σ_2^T-N(i·(i+1))
+  = N²(T-N)-N +2 N·Σ_1^T-N(i) + Σ_2^T-N(i·(i+1))
+  = N²(T-N)-N +2 N·(T-N)(T-N+1)/2 + Σ_2^T-N(i·(i+1))
+  = N²(T-N)-N +N·(T-N)(T-N+1) + Σ_2^T-N(i·(i+1))
+  = N²(T-N)-N +N·(T-N)(T-N+1) + Σ_2^T-N(i²+i))
+  = N²(T-N)-N +N·(T-N)(T-N+1) + Σ_2^T-N(i²)+ Σ_2^T-N(i)
+  = N²(T-N)-N +N·(T-N)(T-N+1) + Σ_2^T-N(i²)+ (T-N)(T-N+1)/2
+  = N²(T-N)-N +N·(T-N)(T-N+1) + (T-N)(T-N+1)/2 + Σ_2^T-N(i²)
+  = N²(T-N)-N +N·(T-N)(T-N+1) + (T-N)(T-N+1)/2 + (T-N)(T-N+1)(2T-2N+1)/6
+  = N²(T-N)-N +(N+½+(2T-2N+1)/6)(T-N)(T-N+1)
+  = N²(T-N)-N +(N+½+⅓T-⅓N+⅙)(T-N)(T-N+1)
+  = N²(T-N)-N +(⅔N+⅓T+⅔)(T-N(T-N+1)
+  = N²(T-N)-N +⅓(2N+T+2)(T-N)(T-N+1)
+  = N²(T-N)-N +⅓(2N+T+2)(T²
+
+    
+

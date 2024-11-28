@@ -1,0 +1,16 @@
+[
+    lid*lN*dsE20kv0.5+0k1/
+]sR                                                              # rounding sqrt
+[
+    n[ ]n
+]sM                                                              # print with space
+[
+[
+    lRxsTlNlMxlid*lN*lTd*+2/lMxlilT*n[ (]nlTlMxlin[)]p3Q
+]sU # in case of 2 difference
+?sN20klNvsW0si                                                   # initialisation
+[
+    li1+silWli*0.5+0k1/2^lNlid**-2^sJlJ4=UlJ2<Q
+] sQ lQx                                                         # main loop
+lNlMxlRxlMxlip
+]sPlPx                                                           # needed for 3Q to work???
