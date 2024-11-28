@@ -1,16 +1,36 @@
 [
-    lid*lN*dsE20kv0.5+0k1/
-]sR                                                              # rounding sqrt
+    0.5+0k1/
+]sH                                #round
+[
+    lid*lN*dsE20kvlHx
+]sR                                # rounding sqrt Ni^2
 [
     n[ ]n
-]sM                                                              # print with space
+]sM                                # print with space
+
+[ #P
+[                                  # rationalize and print
+                                   # in case of 2 difference
+    lRxsT                          # calculate new numerator part1
+    lNlMx                          # print N
+    lid*lN*lTd*+                   # num part 2
+    2/                             # take out 2 
+    lMx
+    lilT*lMx                       # denominator without the 2
+    [ (]lMxlTlMxlin[ )]p           # log the 2diff ratio
+    3Q                             # quit main program
+]sU                                           
+
+?sN20klNvsW0si                     # initialisation
 [
-[
-    lRxsTlNlMxlid*lN*lTd*+2/lMxlilT*n[ (]nlTlMxlin[)]p3Q
-]sU # in case of 2 difference
-?sN20klNvsW0si                                                   # initialisation
-[
-    li1+silWli*0.5+0k1/2^lNlid**-2^sJlJ4=UlJ2<Q
-] sQ lQx                                                         # main loop
-lNlMxlRxlMxlip
-]sPlPx                                                           # needed for 3Q to work???
+    li1+si                         # loop counter increase
+    lW                             # the root
+    li*lHx                         # rounded
+    2^                             # square
+    lNlid**-                       # difference to target
+    2^sJ                           # absolute
+    lJ4=U                          # 2 diff can be simplified
+    lJ2<Q                          # not 4 or 1 so find nxt 
+] sQ lQx                           # main loop
+lNlMxlRxlMxlip                     # print when found 1 diff
+]sPlPx                             # needed for 3Q to work???
