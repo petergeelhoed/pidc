@@ -1,19 +1,15 @@
 ?sY         # number of iterations
 7k        # precision 
 1sf
+1sh
 3v3*4/sQ    # 3/4*sqrt(3)
 0sj         # loopcounter
 [           # program L
     ljsili  # save iteration in i
     [1+]sT  # add one in T
-    1r      # 
-    [       # factorial 
-        [d1-d1<W*]dsWx # test to stop loop
-        [d0=T]x        # when 0 add one on stack
-    ]sFlFx 
-    sf      # save factorial
-    2li*1r[[d1-d1<W*]dsWx[d0=T]x]sFlFxsg # same for 2n!
-    lilflgsSsFsN # save in S F and N ?
+    lflid0=T*sf      # save factorial
+    lhli2*d0=T*li2*1-d1>Td1>T*shlhp
+    lilflhsSsFsN # save in S F and N ?
     lS
     4lN^        
     lF2^*        #  (2N)! 4^N*N!^2
