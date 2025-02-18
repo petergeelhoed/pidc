@@ -1,0 +1,72 @@
+#!/bin/gnuplot
+#set term png size 800,800 font "DejaVuSansCondensed,7" ;
+#set out "spectrumavatar.png"
+@sout;
+set title "Politieke domheid" offset 0,1;
+set size square
+set xrange [0:10];
+set yrange[0:10];
+uns border
+uns xtics
+uns ytics
+#set ylabel "bijdrage aan samenleving" offset 2,0;
+#set xlabel "eigen gewin" offset 0,1;
+set format xy "" ;
+unset key ;
+set label "positief voor samenleving" at 5,10  center ;
+set label "negatief voor samenleving" at 5,0  center ;
+set label "eigen verlies" at 0,5  center rotate;
+set label "eigen gewin" at 10,5  center rotate;
+
+a=3
+b=3
+set label "BBB" at a,b  center ;
+set object 1 ellipse center first  a,b  size 2,3 angle -45 behind fillstyle transparent solid 0.3 border 2 fc lt 2;
+
+a=7
+b=7
+set label "D66" at a,b center tc lt -1;
+set object 2 ellipse center first  a,b  size 1,2  angle -45 behind fillstyle transparent  solid 0.8 border 2  fc lt 2 ;
+
+a=6
+b=4
+set label "SP" at a,b center tc lt -1;
+set object 8 ellipse center first  a,b  size 1,1  angle 15 behind fillstyle transparent  solid 0.7 border 1  fc lt 1 ;
+
+a=4
+b=7
+set label "GLPvdA" at a,b center tc lt -1;
+set object 3 ellipse center first  a,b  size 2,3  angle 15 behind fillstyle transparent  solid 0.7 border 1  fc lt 1 ;
+
+a=10
+b=1
+set label "FvD" at a,b center tc lt -1;
+set object 4 ellipse center first  a,b  size 1,2  angle 45 behind fillstyle transparent  solid 0.7 border 6  fc lt 6 ;
+
+a=7
+b=2
+set label "PVV" at a,b center tc lt -1;
+set object 5 ellipse center first  a,b  size 3,2  angle -65 behind fillstyle transparent  solid 0.2 border 3  fc lt 3 ;
+
+a=8
+b=5
+set label "VVD" at a,b center tc lt -1;
+set object 6 ellipse center first  a,b  size 2,1  angle 0 behind fillstyle transparent  solid 0.9 border 3  fc lt 3 ;
+
+a=6
+b=5.5
+set label "CDA" at a,b center tc lt -1;
+set object 7 ellipse center first  a,b  size 2,1  angle 30 behind fillstyle transparent  solid 1 border 2  fc lt 2 ;
+
+a=4.5
+b=4.5
+set label "NSC" at a,b center tc lt -1;
+set object 9 ellipse center first  a,b  size 5,0.2  angle -45 behind fillstyle transparent  solid 0.3 border -1  fc lt -1 ;
+
+
+set arrow from 5,5 to 5,9.5
+set arrow from 5,5 to 5,0.5
+set arrow from 5,5 to 9.5,5
+set arrow from 5,5 to 0.5,5
+p NaN
+
