@@ -23,14 +23,9 @@ int main(int argc, char** argv)
     {
         long t = sqrt(n * n * a) + 0.5;
         remainder = t * t - n * n * a;
-
-        printf("TT %ld %ld %ld %ld %ld %ld\n",
-               a,
-               t,
-               n,
-               remainder,
-               a,
-               gcd(remainder, a));
+        long grem = gcd(remainder, a);
+        long trem = gcd(t * t + a * n * n, a);
+        printf("TT %ld %ld %ld %ld %ld %ld\n", a, t, n, remainder, a, grem);
 
         if (a % t == 0)
         {
@@ -40,13 +35,25 @@ int main(int argc, char** argv)
             printf("%ld %ld %ld %ld\n", a, t, n, remainder);
             break;
         }
+        if (trem == -1 || labs(trem) > 1)
+        {
+            long newn = n * t * 2 / labs(trem);
+            long newt = (t * t + n * a * n) / labs(trem);
+            long g = gcd(newt, newn);
+            remainder = newt * newt - newn * newn * a;
+            printf("%ld %ld %ld %ld\n", a, newt, newn, remainder);
+
+            if (remainder == 1)
+            {
+                break;
+            }
+        }
         if (remainder == 1)
         {
             printf("%ld %ld %ld %ld\n", a, t, n, remainder);
         }
         else if ((labs(remainder) == 2) || remainder == -1)
         {
-            printf("from: %ld %ld %ld || ", t, n, remainder);
             long new = n* t * 2;
             t = t * t + n * a * n;
             n = new;
