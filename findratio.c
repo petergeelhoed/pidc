@@ -23,12 +23,28 @@ int main(int argc, char** argv)
     {
         long t = sqrt(n * n * a) + 0.5;
         remainder = t * t - n * n * a;
-        // printf("TT %d %d %d %d\n", a, t, n, remainder);
+
+        printf("TT %ld %ld %ld %ld %ld %ld\n",
+               a,
+               t,
+               n,
+               remainder,
+               a,
+               gcd(remainder, a));
+
+        if (a % t == 0)
+        {
+            t = t + a / labs(remainder) * n * n;
+            n = 2 * n;
+            remainder = t * t - n * n * a;
+            printf("%ld %ld %ld %ld\n", a, t, n, remainder);
+            break;
+        }
         if (remainder == 1)
         {
-            printf("%d %d %d %d\n", a, t, n, remainder);
+            printf("%ld %ld %ld %ld\n", a, t, n, remainder);
         }
-        else if ((abs(remainder) == 2) || remainder == -1)
+        else if ((labs(remainder) == 2) || remainder == -1)
         {
             printf("from: %ld %ld %ld || ", t, n, remainder);
             long new = n* t * 2;
