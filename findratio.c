@@ -51,7 +51,8 @@ int main(int argc, char** argv)
                        trem,
                        try);
 
-            if (try > 1 || remainder == -1)
+            if ((try > 1 && try != a) || remainder == -1 ||
+                labs(remainder) == 2)
             {
                 count++;
                 long newn = n * t * 2;
@@ -86,7 +87,8 @@ int main(int argc, char** argv)
             printf("Error overflow!!!\n");
         }
     }
-    printf("time= %lu/%lu\n", -time_req + clock(), CLOCKS_PER_SEC);
+    if (v > 3)
+        printf("time= %lu/%lu\n", -time_req + clock(), CLOCKS_PER_SEC);
 
     exit(0);
 }
