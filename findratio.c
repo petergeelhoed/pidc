@@ -27,7 +27,7 @@ int main(int argc, char** argv)
         count++;
         t = sqrt(n * n * a) + 0.5;
         remainder = t * t - n * n * a;
-        if (remainder == 0)
+        if (remainder == 0 || t == 0)
             break;
         long trem = gcd(t * t + a * n * n, a);
         long try = gcd(remainder, trem);
@@ -62,7 +62,14 @@ int main(int argc, char** argv)
         }
         n++;
     }
-    printf("%ld %ld %ld %ld %ld\n", a, t, n, remainder, count);
+    if (t > 0)
+    {
+        printf("%ld %ld %ld %ld %ld\n", a, t, n, remainder, count);
+    }
+    else
+    {
+        printf("Error overflow!!!\n");
+    }
 
     exit(0);
 }
