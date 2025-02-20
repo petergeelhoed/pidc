@@ -12,6 +12,7 @@ long gcd(long a, long b)
 
 int main(int argc, char** argv)
 {
+    int v = 1;
     long a = 2;
     if (argc > 1)
     {
@@ -19,57 +20,52 @@ int main(int argc, char** argv)
     }
     long remainder = a;
     long n = 1;
+    long t = 1;
     while (remainder != 1 && remainder != 0)
     {
-        long t = sqrt(n * n * a) + 0.5;
+        t = sqrt(n * n * a) + 0.5;
         remainder = t * t - n * n * a;
         long grem = gcd(remainder, a);
         long trem = gcd(t * t + a * n * n, a);
-        printf("TT %ld %ld %ld %ld %ld %ld\n", a, t, n, remainder, a, grem);
+        if (v)
+            printf("TT %ld %ld %ld %ld %ld %ld %ld\n",
+                   a,
+                   t,
+                   n,
+                   remainder,
+                   a,
+                   grem,
+                   trem);
 
-        if (a % t == 0)
+        if (trem == -1 || labs(trem) > 1 || (labs(remainder) == 2) ||
+            remainder == -1)
         {
-            t = t + a / labs(remainder) * n * n;
-            n = 2 * n;
-            remainder = t * t - n * n * a;
-            printf("%ld %ld %ld %ld\n", a, t, n, remainder);
-            break;
-        }
-        if (trem == -1 || labs(trem) > 1)
-        {
-            long newn = n * t * 2 / labs(trem);
-            long newt = (t * t + n * a * n) / labs(trem);
+            long newn = n * t * 2;
+            long newt = (t * t + n * a * n);
             long g = gcd(newt, newn);
+            newt /= g;
+            newn /= g;
             remainder = newt * newt - newn * newn * a;
-            printf("%ld %ld %ld %ld\n", a, newt, newn, remainder);
 
+            if (v)
+                printf("TEST %ld %ld %ld %ld %ld %ld %ld\n",
+                       a,
+                       newt,
+                       newn,
+                       remainder,
+                       g,
+                       grem,
+                       trem);
             if (remainder == 1)
             {
+                n = newn;
+                t = newt;
                 break;
             }
         }
-        if (remainder == 1)
-        {
-            printf("%ld %ld %ld %ld\n", a, t, n, remainder);
-        }
-        else if ((labs(remainder) == 2) || remainder == -1)
-        {
-            long new = n* t * 2;
-            t = t * t + n * a * n;
-            n = new;
-            long g = gcd(t, n);
-            t /= g;
-            n /= g;
-            remainder = t * t - n * n * a;
-
-            printf("%ld %ld %ld %ld\n", a, t, n, remainder);
-            break;
-        }
-        else
-        {
-            n++;
-        }
+        n++;
     }
+    printf("%ld %ld %ld %ld\n", a, t, n, remainder);
 
     exit(0);
 }
