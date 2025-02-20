@@ -21,19 +21,23 @@ int main(int argc, char** argv)
     long remainder = a;
     long n = 1;
     long t = 1;
+    long count = 0;
     while (remainder != 1 && remainder != 0)
     {
+        count++;
         t = sqrt(n * n * a) + 0.5;
         remainder = t * t - n * n * a;
         if (remainder == 0)
             break;
         long trem = gcd(t * t + a * n * n, a);
+        long try = gcd(remainder, trem);
         if (v)
-            printf("TT %ld %ld %ld %ld %ld %ld\n", a, t, n, remainder, a, trem);
+            printf(
+                "TT %ld %ld %ld %ld %ld %ld\n", a, t, n, remainder, trem, try);
 
-        if (trem == -1 || labs(trem) > 1 || (labs(remainder) == 2) ||
-            remainder == -1)
+        if (try > 1 || remainder == -1)
         {
+            count++;
             long newn = n * t * 2;
             long newt = (t * t + n * a * n);
             long g = gcd(newt, newn);
@@ -47,8 +51,8 @@ int main(int argc, char** argv)
                        newt,
                        newn,
                        remainder,
-                       g,
-                       trem);
+                       trem,
+                       g);
             if (remainder == 1)
             {
                 n = newn;
@@ -58,7 +62,7 @@ int main(int argc, char** argv)
         }
         n++;
     }
-    printf("%ld %ld %ld %ld\n", a, t, n, remainder);
+    printf("%ld %ld %ld %ld %ld\n", a, t, n, remainder, count);
 
     exit(0);
 }
