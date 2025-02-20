@@ -15,13 +15,15 @@ int main(int argc, char** argv)
 {
     clock_t time_req = clock();
 
-    int v = argc > 2;
+    int v = 0;
     long loop = 1;
     if (argc > 1)
     {
         loop = atoi(argv[1]);
     }
-    for (long a = 0; a <= loop; a++)
+    if (argc > 2)
+        v = atoi(argv[2]);
+    for (long a = loop; a <= loop; a++)
     {
         long remainder = a;
         long n = 1;
@@ -30,13 +32,17 @@ int main(int argc, char** argv)
         while (remainder != 1 && remainder != 0)
         {
             count++;
-            t = sqrt(n * n * a) + 0.5;
-            remainder = t * t - n * n * a;
+            long int nSquareA = n * n * a;
+            t = sqrt(nSquareA) + 0.5;
+            long int tSquare = t * t;
+            remainder = tSquare - nSquareA;
             if (remainder == 0 || t == 0)
                 break;
-            long trem = gcd(t * t + a * n * n, a);
+            long newt = tSquare + nSquareA;
+            long trem = gcd(newt, a);
             long try = gcd(remainder, trem);
-            if (v)
+
+            if (v > 2)
                 printf("TT %ld %ld %ld %ld %ld %ld\n",
                        a,
                        t,
@@ -49,13 +55,12 @@ int main(int argc, char** argv)
             {
                 count++;
                 long newn = n * t * 2;
-                long newt = (t * t + n * a * n);
                 long g = gcd(newt, newn);
                 newt /= g;
                 newn /= g;
                 remainder = newt * newt - newn * newn * a;
 
-                if (v)
+                if (v > 1)
                     printf("TEST %ld %ld %ld %ld %ld %ld\n",
                            a,
                            newt,
