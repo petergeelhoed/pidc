@@ -12,7 +12,7 @@ long gcd(long a, long b)
 
 int main(int argc, char** argv)
 {
-    int v = 1;
+    int v = argc > 2;
     long a = 2;
     if (argc > 1)
     {
@@ -25,17 +25,11 @@ int main(int argc, char** argv)
     {
         t = sqrt(n * n * a) + 0.5;
         remainder = t * t - n * n * a;
-        long grem = gcd(remainder, a);
+        if (remainder == 0)
+            break;
         long trem = gcd(t * t + a * n * n, a);
         if (v)
-            printf("TT %ld %ld %ld %ld %ld %ld %ld\n",
-                   a,
-                   t,
-                   n,
-                   remainder,
-                   a,
-                   grem,
-                   trem);
+            printf("TT %ld %ld %ld %ld %ld %ld\n", a, t, n, remainder, a, trem);
 
         if (trem == -1 || labs(trem) > 1 || (labs(remainder) == 2) ||
             remainder == -1)
@@ -48,13 +42,12 @@ int main(int argc, char** argv)
             remainder = newt * newt - newn * newn * a;
 
             if (v)
-                printf("TEST %ld %ld %ld %ld %ld %ld %ld\n",
+                printf("TEST %ld %ld %ld %ld %ld %ld\n",
                        a,
                        newt,
                        newn,
                        remainder,
                        g,
-                       grem,
                        trem);
             if (remainder == 1)
             {
