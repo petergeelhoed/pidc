@@ -40,8 +40,8 @@ int main(int argc, char** argv)
             remainder = tSquare - nSquareA;
             if (remainder == 0)
                 break;
-            long newt = tSquare + nSquareA;
-            long newn = n * t * 2;
+            unsigned long newt = tSquare + nSquareA;
+            long unsigned newn = n * t * 2;
 
             if (v > 2)
                 printf("TT %ld %ld %ld %ld %ld %lu %lu %ld\n",
@@ -49,12 +49,12 @@ int main(int argc, char** argv)
                        t,
                        n,
                        remainder,
-                       2 * n * t % remainder,
+                       newn % labs(remainder),
                        tSquare,
                        nSquareA,
                        newt);
 
-            if (newn % remainder == 0)
+            if (newn % labs(remainder) == 0)
             {
                 count++;
                 long g = gcd(newt, newn);
