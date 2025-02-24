@@ -26,29 +26,39 @@ int main(int argc, char** argv)
     for (long a = loop; a <= loop; a++)
     {
         long remainder = a;
-        // long n = 408028012;
-        long n = 1;
-        long t = 0;
-        long count = 0;
+        unsigned long n = 258059572;
+        // unsigned long n = 1;
+        unsigned long t = 0;
+        unsigned long count = 0;
         while (remainder != 1 && remainder != 0)
         {
-            // if (n > 408028016) break;
             count++;
             long unsigned int nSquareA = n * n * a;
-            t = sqrt(nSquareA) + 0.5;
+            t = sqrtl(nSquareA) + 0.5;
             long unsigned int tSquare = t * t;
+            if (t < n)
+            {
+                printf("Overflow %lu %lu %lu %lu %lu %Lf\n",
+                       t,
+                       n,
+                       nSquareA,
+                       tSquare,
+                       nSquareA + tSquare,
+                       sqrtl(nSquareA) + 0.5);
+                exit(-15);
+            }
             remainder = tSquare - nSquareA;
             if (remainder == 0)
                 break;
             unsigned long newt = tSquare + nSquareA;
             long unsigned newn = n * t * 2;
-
             if (v > 2)
-                printf("TT %ld %ld %ld %ld %ld %lu %lu %ld\n",
+                printf("TT %ld %lu %lu %ld %lu %ld %lu %lu %ld\n",
                        a,
                        t,
                        n,
                        remainder,
+                       labs(remainder),
                        newn % labs(remainder),
                        tSquare,
                        nSquareA,
@@ -78,12 +88,13 @@ int main(int argc, char** argv)
                 else
                 {
                     // this should never happen.
-                    printf("NO GO: % ld % ld % ld % ld % ld\n ",
+                    printf("NO GO: %ld %ld %ld %ld %lu\n",
                            a,
                            newt,
                            newn,
                            remainder,
-                           g);
+                           n);
+                    exit(1);
                 }
             }
             n++;
