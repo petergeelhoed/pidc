@@ -26,48 +26,48 @@ int main(int argc, char** argv)
     for (long a = loop; a <= loop; a++)
     {
         long remainder = a;
+        // long n = 408028012;
         long n = 1;
-        long t = 1;
+        long t = 0;
         long count = 0;
         while (remainder != 1 && remainder != 0)
         {
+            // if (n > 408028016) break;
             count++;
-            long int nSquareA = n * n * a;
+            long unsigned int nSquareA = n * n * a;
             t = sqrt(nSquareA) + 0.5;
-            long int tSquare = t * t;
+            long unsigned int tSquare = t * t;
             remainder = tSquare - nSquareA;
-            if (remainder == 0 || t == 0)
+            if (remainder == 0)
                 break;
             long newt = tSquare + nSquareA;
-            long trem = gcd(newt, a);
-            long try = gcd(remainder, trem);
+            long newn = n * t * 2;
 
             if (v > 2)
-                printf("TT %ld %ld %ld %ld %ld %ld\n",
+                printf("TT %ld %ld %ld %ld %ld %lu %lu %ld\n",
                        a,
                        t,
                        n,
                        remainder,
-                       trem,
-                       try);
+                       2 * n * t % remainder,
+                       tSquare,
+                       nSquareA,
+                       newt);
 
-            if ((try > 1 && try != a) || remainder == -1 ||
-                labs(remainder) == 2)
+            if (newn % remainder == 0)
             {
                 count++;
-                long newn = n * t * 2;
                 long g = gcd(newt, newn);
                 newt /= g;
                 newn /= g;
                 remainder = newt * newt - newn * newn * a;
 
                 if (v > 1)
-                    printf("TEST %ld %ld %ld %ld %ld %ld\n",
+                    printf("TEST %ld %ld %ld %ld %ld\n",
                            a,
                            newt,
                            newn,
                            remainder,
-                           trem,
                            g);
                 if (remainder == 1)
                 {
@@ -75,10 +75,24 @@ int main(int argc, char** argv)
                     t = newt;
                     break;
                 }
+                else
+                {
+                    // this should never happen.
+                    printf("NO GO: % ld % ld % ld % ld % ld\n ",
+                           a,
+                           newt,
+                           newn,
+                           remainder,
+                           g);
+                }
             }
             n++;
+            if (t == 1)
+            {
+                printf("%ld %ld %ld %ld %ld\n", a, t, n, remainder, count);
+            }
         }
-        if (t > 0)
+        if (t > 0 || a == 0)
         {
             printf("%ld %ld %ld %ld %ld\n", a, t, n, remainder, count);
         }
