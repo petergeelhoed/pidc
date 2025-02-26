@@ -27,6 +27,28 @@ char* toArr(unsigned long int i, size_t size)
     return ret;
 }
 
+char* subArr(char* one, char* two, size_t size)
+{
+    char* ret = (char*)calloc(size + 1, sizeof(char));
+    ret[size + 1] = '\0';
+    memset(ret, '0', size);
+
+    char carry = 0;
+    for (size_t index = 0; index < size; ++index)
+    {
+        char digit1 = one[size - index];
+        char digit2 = two[size - index] - '0';
+        char outdigit = digit1 - digit2 + carry;
+        carry = 0;
+        while (outdigit < '0')
+        {
+            outdigit += 10;
+            carry -= 1;
+        }
+        ret[2 * size - 1 - index] = outdigit;
+    }
+    return ret;
+}
 char* addArr(char* one, char* two, size_t size)
 {
     char* ret = (char*)calloc(2 * size + 1, sizeof(char));
@@ -49,6 +71,7 @@ char* addArr(char* one, char* two, size_t size)
     }
     return ret;
 }
+
 char* mulArr(char* one, char* two, size_t size)
 {
     char* ret = (char*)calloc(2 * size + 1, sizeof(char));
@@ -153,7 +176,13 @@ int main()
     char* two = toArr(21355, SIZE);
     char* one = toArr(21351, SIZE);
     char* ret = mulArr(one, two, SIZE);
-    // char* ret = addArr(one, two);
+    char* sub1 = addArr(two, one);
+    printf("%s\n", sub1);
+    char* sub = addArr(one, two);
+    printf("%s\n", sub);
+    char* add = addArr(one, two);
+    printf("%s\n", add);
+
     printf("%s\n", one);
     printf("%s\n", two);
     printf("%s\n", ret);
