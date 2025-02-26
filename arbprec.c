@@ -55,27 +55,34 @@ char* subArr(char* one, char* two)
     return stripZeros(ret);
 }
 
-char* addArr(char* one, char* two, size_t size)
+char* addArr(char* one, char* two)
 {
-    char* ret = (char*)calloc(2 * size + 1, sizeof(char));
-    ret[size * 2 + 1] = '\0';
-    memset(ret, '0', size * 2);
+    size_t len1 = strlen(one);
+    size_t len2 = strlen(two);
+    size_t size = len1 > len2 ? len1 : len2;
+
+    // add one to size as it may be needed
+    size++;
+    char* ret = (char*)calloc(size + 1, sizeof(char));
+    ret[size + 1] = '\0';
+    memset(ret, '0', size);
 
     char carry = 0;
-    for (size_t index = 0; index < size; ++index)
+    for (size_t index = 1; index <= size; ++index)
     {
-        char digit1 = one[size - index];
-        char digit2 = two[size - index] - '0';
-        char outdigit = digit1 + digit2 + carry;
+        char digit1 = (index <= len1) ? one[len1 - index] - '0' : 0;
+        char digit2 = (index <= len2) ? two[len2 - index] - '0' : 0;
+        char outdigit = digit1 + digit2 + carry + '0';
+
         carry = 0;
         while (outdigit > '9')
         {
             outdigit -= 10;
             carry += 1;
         }
-        ret[2 * size - 1 - index] = outdigit;
+        ret[size - index] = outdigit;
     }
-    return ret;
+    return stripZeros(ret);
 }
 
 char* mulArr(char* one, char* two)
@@ -88,9 +95,9 @@ char* mulArr(char* one, char* two)
     memset(ret, '0', size - 1);
 
     char carry = 0;
+    size_t indexout = 0;
     for (size_t index1 = 0; index1 < len1; ++index1)
     {
-        size_t indexout = 0;
         for (size_t index2 = 0; index2 < len2; ++index2)
         {
             indexout = index1 + index2 + 1;
@@ -98,7 +105,7 @@ char* mulArr(char* one, char* two)
             char digit2 = two[len2 - index2 - 1] - '0';
 
             char outdigit =
-                (ret[size - 1 - indexout] - '0') + digit1 * digit2 + carry;
+                (ret[size - indexout - 1] - '0') + digit1 * digit2 + carry;
             carry = 0;
             outdigit += '0';
             while (outdigit > '9')
@@ -106,91 +113,125 @@ char* mulArr(char* one, char* two)
                 outdigit -= 10;
                 carry += 1;
             }
-            ret[size - 1 - indexout] = outdigit;
+            ret[size - indexout - 1] = outdigit;
         }
     }
-    return ret;
+    if (carry)
+    {
+        puts(ret);
+        size_t retlen = strlen(ret);
+        memmove(ret + 1, ret, retlen + 1);
+        ret[0] = '0' + carry;
+        puts(ret);
+    }
+
+    return stripZeros(ret);
 }
 
 int greater(char* arr1, char* arr2)
 {
     char* start1 = stripZeros(arr1);
     char* start2 = stripZeros(arr2);
-    return strcmp(start1, start2);
+    return strcmp(start2, start1);
 }
-/*
+
 char* sqrtArr(char* in)
 {
-    size_t size = strlen(in);
-    char* val = stripZeros(in);
-    size_t length = strlen(val);
-    size_t pos = size - length - length % 2;
-    int try = 0;
-    char* works = (char*)malloc((size + 1) * sizeof(char));
-    memset(works, '0', size);
-    works[size + 1] = '\0';
-    strncpy(works + size - 2, in + pos, 2);
-    printf("%s\n", works);
+    // add one to size as it may be needed
+    size_t length = strlen(in);
 
-    char digit1 = in[pos++] - '0';
-    char digit2 = in[pos++] - '0';
-    int work = digit1 * 10 + digit2;
-    char* tryarr;
+    size_t size = length + length % 2;
+    int try = 0;
+    char* works = (char*)calloc((size + 1), sizeof(char));
+    char* result = (char*)calloc((size + 1), sizeof(char));
+
+    size_t pos = 0;
+
+    if (length % 2 == 0)
+    {
+        works[0] = in[pos++];
+        works[1] = in[pos++];
+    }
+    else
+    {
+        works[0] = in[pos++];
+    }
+
+    char* tryArr = NULL;
     for (; try < 10;)
     {
         try++;
-        tryarr = toArr(try, size);
-        char* tryarr = toArr(try, size);
-        if (greater(mulArr(tryarr, tryarr, size), works) > 0)
+        free(tryArr);
+        tryArr = toArr(try, size);
+        if (greater(mulArr(tryArr, tryArr), works) < 0)
         {
             try--;
             break;
         }
     }
-    printf("%d %d\n", work, try);
-    int result = try;
-    work = work - try * try;
-    char* newWorks = subArr(works, mulArr(tryarr, tryarr, size), size);
-    printf("mul: %s %lu\n", mulArr(tryarr, tryarr, size), size);
-    printf("works: %s %s\n", works, newWorks);
+    puts("worksL");
+    puts(works);
+    puts(toArr(try, size));
 
-    free(tryarr);
-    while (pos < size)
+    result[0] = try + '0';
+
+    puts(mulArr(result, result));
+    char* newWorks = subArr(works, mulArr(result, result));
+    printf("works: %s %s %s\n", works, result, newWorks);
+
+    // while (pos < size)
     {
-        work *= 100;
-        work += 10 * (in[pos++] - '0');
-        work += in[pos++] - '0';
-        //   printf("work %d\n", work);
-        int t = 0;
-        for (size_t i = 0; i < 10; i++)
+        // work *= 100;
+        size_t nullpos = strlen(works);
+        works[nullpos] = in[pos++];
+        works[nullpos + 1] = in[pos++];
+
+        size_t t = 0;
+        printf("works: %s %s t=%lu\n", works, result, t);
+        printf("res*20=%s\n", mulArr(toArr(20, 3), result));
+        for (size_t i = 0; i < 10UL; i++)
         {
             t++;
-            //     printf("work %d*%d < %d \n", 20 * result + t, t, work);
-            if ((20 * result + t) * t > work)
+            printf("%s+%s)*%s=%s => %s > %s\n",
+                   mulArr(toArr(20, 3), result),
+                   toArr(t, 2),
+                   toArr(t, 2),
+                   addArr(mulArr(toArr(20, 3), result), toArr(t, 2)),
+                   mulArr(addArr(mulArr(toArr(20, 3), result), toArr(t, 2)),
+                          toArr(t, 3)),
+                   works);
+
+            if (greater(
+                    mulArr(addArr(mulArr(toArr(20, 3), result), toArr(t, 2)),
+                           toArr(t, 2)),
+                    works) > 0)
             {
+                puts("breaking");
                 t--;
                 break;
             }
         }
-        //       printf("calv %d %d %d\n", 20 * result + t, work, t);
-        work = work - (20 * result + t) * t;
-        result *= 10;
-        result += t;
-        //      printf("resu %d %d %d\n", result, work, t);
     }
-
-    free(works);
-    return toArr(result, size);
+    /*
+    printf("calv t");
+    work = work - (20 * result + t) * t;
+    result *= 10;
+    result += t;
+    //      printf("resu %d %d %d\n", result, work, t);
 }
+free(works);
 */
+
+    return result;
+}
 
 int main()
 {
 
     char* two = toArr(1345, SIZE);
-    char* one = toArr(567, SIZE);
+    char* one = toArr(1345, SIZE);
     printf("%s\n", one);
-    printf("%s\n", stripZeros(two));
+    /*   printf("%s\n", stripZeros(two));
     char* ret = mulArr(one, two);
     printf("%s\n", ret);
     char* sub1 = subArr(two, one);
@@ -198,9 +239,20 @@ int main()
     printf("fail %s\n", stripZeros(sub1));
     char* sub = subArr(one, two);
     printf("%s\n", sub);
-    return 0;
-    char* add = addArr(one, two, SIZE);
+    char* add = addArr(one, two);
     printf("%s\n", add);
+    printf("21 > 180 = %d\n", greater("21", "180"));
+    printf("180 > 21 = %d\n", greater("180", "21"));
+    */
+
+    printf("%s\n", mulArr("99", "99"));
+    char* ret = mulArr(one, two);
+    return 0;
+    printf("1809025 = %s\n", ret);
+    char* sq = sqrtArr(ret);
+
+    printf("%s\n", sq);
+    return 0;
 
     printf("%s\n", stripZeros(ret));
     printf("%d\n", greater(one, two));
