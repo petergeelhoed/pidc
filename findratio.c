@@ -41,7 +41,7 @@ int main(int argc, char** argv)
         }
         count++;
         long unsigned int nSquareA = n * n * a;
-        t = sqrt(nSquareA) + 0.5;
+        t = n * sqrt(a) + 0.5;
         long unsigned int tSquare = t * t;
 
         remainder = tSquare - nSquareA;
