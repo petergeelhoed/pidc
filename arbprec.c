@@ -118,11 +118,9 @@ char* mulArr(char* one, char* two)
     }
     if (carry)
     {
-        puts(ret);
         size_t retlen = strlen(ret);
         memmove(ret + 1, ret, retlen + 1);
         ret[0] = '0' + carry;
-        puts(ret);
     }
 
     return stripZeros(ret);
@@ -132,7 +130,16 @@ int greater(char* arr1, char* arr2)
 {
     char* start1 = stripZeros(arr1);
     char* start2 = stripZeros(arr2);
-    return strcmp(start2, start1);
+
+    if (strlen(start1) > strlen(start2))
+    {
+        return 1;
+    }
+    if (strlen(start2) > strlen(start1))
+    {
+        return -1;
+    }
+    return strcmp(start1, start2);
 }
 
 char* sqrtArr(char* in)
@@ -163,64 +170,45 @@ char* sqrtArr(char* in)
         try++;
         free(tryArr);
         tryArr = toArr(try, size);
-        if (greater(mulArr(tryArr, tryArr), works) < 0)
+        if (greater(mulArr(tryArr, tryArr), works) > 0)
         {
             try--;
             break;
         }
     }
-    puts("worksL");
-    puts(works);
-    puts(toArr(try, size));
 
     result[0] = try + '0';
 
-    puts(mulArr(result, result));
     char* newWorks = subArr(works, mulArr(result, result));
-    printf("works: %s %s %s\n", works, result, newWorks);
+    works = newWorks;
 
-    // while (pos < size)
+    while (pos < size - 1)
     {
-        // work *= 100;
+        size_t t = 0;
         size_t nullpos = strlen(works);
         works[nullpos] = in[pos++];
         works[nullpos + 1] = in[pos++];
 
-        size_t t = 0;
-        printf("works: %s %s t=%lu\n", works, result, t);
-        printf("res*20=%s\n", mulArr(toArr(20, 3), result));
         for (size_t i = 0; i < 10UL; i++)
         {
             t++;
-            printf("%s+%s)*%s=%s => %s > %s\n",
-                   mulArr(toArr(20, 3), result),
-                   toArr(t, 2),
-                   toArr(t, 2),
-                   addArr(mulArr(toArr(20, 3), result), toArr(t, 2)),
-                   mulArr(addArr(mulArr(toArr(20, 3), result), toArr(t, 2)),
-                          toArr(t, 3)),
-                   works);
-
             if (greater(
                     mulArr(addArr(mulArr(toArr(20, 3), result), toArr(t, 2)),
                            toArr(t, 2)),
                     works) > 0)
             {
-                puts("breaking");
                 t--;
                 break;
             }
         }
+        newWorks =
+            subArr(works,
+                   mulArr(addArr(mulArr(toArr(20, 3), result), toArr(t, 2)),
+                          toArr(t, 2)));
+        works = newWorks;
+        size_t reslen = strlen(result);
+        result[reslen] = t + '0';
     }
-    /*
-    printf("calv t");
-    work = work - (20 * result + t) * t;
-    result *= 10;
-    result += t;
-    //      printf("resu %d %d %d\n", result, work, t);
-}
-free(works);
-*/
 
     return result;
 }
@@ -247,7 +235,6 @@ int main()
 
     printf("%s\n", mulArr("99", "99"));
     char* ret = mulArr(one, two);
-    return 0;
     printf("1809025 = %s\n", ret);
     char* sq = sqrtArr(ret);
 
