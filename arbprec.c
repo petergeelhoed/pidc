@@ -230,8 +230,8 @@ char* sqrtArr(char* in)
         works[nullpos + 1] = in[pos++];
         works[nullpos + 2] = '\0';
 
-        char arrt[2] = "0";
-        for (; arrt[0] < '9' + 1;)
+        char arrt[2] = "1";
+        for (; arrt[0] < '9' + 1; arrt[0] += 1)
         {
             char* mul20 = mulArr(arr20, result);
             char* sum20t = addArr(mul20, arrt);
@@ -239,15 +239,14 @@ char* sqrtArr(char* in)
             free(mul20);
             if (greater(mulart, works) > 0)
             {
-                arrt[0] -= 1;
                 free(sum20t);
                 free(mulart);
                 break;
             }
             free(sum20t);
             free(mulart);
-            arrt[0] += 1;
         }
+        arrt[0] -= 1;
         char* res20 = mulArr(arr20, result);
         char* sum20 = addArr(res20, arrt);
         free(res20);
