@@ -1,14 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define SIZE 10
+
+#define SIZE 64
 
 char* stripZeros(char* in)
 {
     size_t length = strlen(in);
     size_t offset = strspn(in, "0");
-
-    if (offset < length && offset > 0)
+    //   printf("%lu %lu\n", length, offset);
+    if (length == offset)
+    {
+        in[1] = '\0';
+    }
+    else if (offset < length && offset > 0)
     {
         memmove(in, in + offset, length - offset);
         memset(in + length - offset, '\0', length - offset);
@@ -16,12 +21,11 @@ char* stripZeros(char* in)
     return in;
 }
 
-char* toArr(unsigned long int i, size_t size)
+char* toArr(unsigned long int i)
 {
-    char* ret = (char*)calloc(size + 1, sizeof(char));
+    char* ret = (char*)calloc(SIZE + 1, sizeof(char));
 
-    snprintf(ret, size, "%lu", i);
-    ret[size] = '\0';
+    snprintf(ret, SIZE, "%lu", i);
     return ret;
 }
 
@@ -169,7 +173,7 @@ char* sqrtArr(char* in)
     {
         try++;
         free(tryArr);
-        tryArr = toArr(try, size);
+        tryArr = toArr(try);
         if (greater(mulArr(tryArr, tryArr), works) > 0)
         {
             try--;
@@ -191,19 +195,17 @@ char* sqrtArr(char* in)
 
         for (; t < 10UL; t++)
         {
-            if (greater(
-                    mulArr(addArr(mulArr(toArr(20, 3), result), toArr(t, 2)),
-                           toArr(t, 2)),
-                    works) > 0)
+            if (greater(mulArr(addArr(mulArr(toArr(20), result), toArr(t)),
+                               toArr(t)),
+                        works) > 0)
             {
                 t--;
                 break;
             }
         }
-        newWorks =
-            subArr(works,
-                   mulArr(addArr(mulArr(toArr(20, 3), result), toArr(t, 2)),
-                          toArr(t, 2)));
+        newWorks = subArr(
+            works,
+            mulArr(addArr(mulArr(toArr(20), result), toArr(t)), toArr(t)));
         works = newWorks;
         size_t reslen = strlen(result);
         result[reslen] = t + '0';
@@ -212,42 +214,22 @@ char* sqrtArr(char* in)
     return result;
 }
 
-int main()
+char* closest(char* in)
+
 {
+    char* sqrt = sqrtArr(in);
+    char* diff0 = subArr(in, mulArr(sqrt, sqrt));
+    char* addone = addArr(sqrt, "1");
+    char* diff1 = subArr(mulArr(addone, addone), in);
+    return (greater(diff1, diff0) >= 0) ? sqrt : addone;
+}
 
-    char* two = toArr(1345, SIZE);
-    char* one = toArr(1345, SIZE);
-    printf("%s\n", one);
-    /*   printf("%s\n", stripZeros(two));
-    char* ret = mulArr(one, two);
-    printf("%s\n", ret);
-    char* sub1 = subArr(two, one);
-    printf("%s\n", sub1);
-    printf("fail %s\n", stripZeros(sub1));
-    char* sub = subArr(one, two);
-    printf("%s\n", sub);
-    char* add = addArr(one, two);
-    printf("%s\n", add);
-    printf("21 > 180 = %d\n", greater("21", "180"));
-    printf("180 > 21 = %d\n", greater("180", "21"));
-    */
-
-    printf("%s\n", mulArr("99", "99"));
-    char* ret = mulArr(one, two);
-    printf("1809025 = %s\n", ret);
-    char* sq = sqrtArr(ret);
-
-    printf("%s\n", sq);
-    return 0;
-
-    printf("%s\n", stripZeros(ret));
-    printf("%d\n", greater(one, two));
-    printf("%d\n", greater(two, one));
-    printf("%d\n", greater(one, one));
-    //   printf("OUT: %s\n", sqrtArr(ret));
-
-    free(one);
-    free(two);
-    free(ret);
+int main(int argc, char** argv)
+{
+    if (argc > 1)
+    {
+        //        puts(sqrtArr(argv[1]));
+        puts(closest(argv[1]));
+    }
     return 0;
 }
