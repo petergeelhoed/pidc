@@ -182,17 +182,17 @@ char* sqrtArr(char* in)
     }
 
     result[0] = try + '0';
-
     char* newWorks = subArr(works, mulArr(result, result));
     works = newWorks;
 
     while (pos < size - 1)
     {
-        size_t t = 0;
         size_t nullpos = strlen(works);
         works[nullpos] = in[pos++];
         works[nullpos + 1] = in[pos++];
+        works[nullpos + 2] = '\0';
 
+        size_t t = 0;
         for (; t < 10UL; t++)
         {
             if (greater(mulArr(addArr(mulArr(toArr(20), result), toArr(t)),
@@ -206,6 +206,7 @@ char* sqrtArr(char* in)
         newWorks = subArr(
             works,
             mulArr(addArr(mulArr(toArr(20), result), toArr(t)), toArr(t)));
+        free(works);
         works = newWorks;
         size_t reslen = strlen(result);
         result[reslen] = t + '0';
@@ -228,8 +229,9 @@ int main(int argc, char** argv)
 {
     if (argc > 1)
     {
-        //        puts(sqrtArr(argv[1]));
+        // puts(sqrtArr(argv[1]));
         puts(closest(argv[1]));
     }
+
     return 0;
 }
