@@ -189,9 +189,8 @@ char* sqrtArr(char* in)
         works[nullpos] = in[pos++];
         works[nullpos + 1] = in[pos++];
 
-        for (size_t i = 0; i < 10UL; i++)
+        for (; t < 10UL; t++)
         {
-            t++;
             if (greater(
                     mulArr(addArr(mulArr(toArr(20, 3), result), toArr(t, 2)),
                            toArr(t, 2)),
