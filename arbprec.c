@@ -251,6 +251,8 @@ char* sqrtArr(char* in)
             free(mulart);
             arrt[0] += 1;
         }
+        puts(result);
+        puts(arrt);
         char* res20 = mulArr(arr20, result);
         char* sum20 = addArr(res20, arrt);
         free(res20);
