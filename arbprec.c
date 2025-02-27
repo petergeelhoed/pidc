@@ -9,7 +9,6 @@ char* stripZeros(char* in)
 {
     size_t length = strlen(in);
     size_t offset = strspn(in, "0");
-    //   printf("%lu %lu\n", length, offset);
     if (length == offset)
     {
         in[1] = '\0';
@@ -17,7 +16,7 @@ char* stripZeros(char* in)
     else if (offset < length && offset > 0)
     {
         memmove(in, in + offset, length - offset);
-        memset(in + length - offset, '\0', length - offset);
+        memset(in + length - offset, '\0', offset);
     }
     return in;
 }
@@ -232,27 +231,24 @@ char* sqrtArr(char* in)
         works[nullpos + 1] = in[pos++];
         works[nullpos + 2] = '\0';
 
-        size_t t = 0;
         char arrt[2] = "0";
         for (; arrt[0] < '9' + 1;)
         {
             char* mul20 = mulArr(arr20, result);
-            char* sum20 = addArr(mul20, arrt);
-            char* mulart = mulArr(sum20, result);
+            char* sum20t = addArr(mul20, arrt);
+            char* mulart = mulArr(sum20t, arrt);
             free(mul20);
             if (greater(mulart, works) > 0)
             {
                 arrt[0] -= 1;
-                free(sum20);
+                free(sum20t);
                 free(mulart);
                 break;
             }
-            free(sum20);
+            free(sum20t);
             free(mulart);
             arrt[0] += 1;
         }
-        puts(result);
-        puts(arrt);
         char* res20 = mulArr(arr20, result);
         char* sum20 = addArr(res20, arrt);
         free(res20);
@@ -262,8 +258,11 @@ char* sqrtArr(char* in)
         free(mulart);
         free(works);
         works = newWorks;
-        size_t reslen = strlen(result);
-        result[reslen] = t + '0';
+        char* result10 = mulArr(result, "10");
+        char* result10t = addArr(result10, arrt);
+        free(result10);
+        free(result);
+        result = result10t;
     }
     free(arr20);
     free(works);
