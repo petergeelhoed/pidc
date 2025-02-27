@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #define SIZE 64
 
@@ -24,6 +25,11 @@ char* stripZeros(char* in)
 char* toArr(unsigned long int i)
 {
     char* ret = (char*)calloc(SIZE + 1, sizeof(char));
+    if (ret == NULL)
+    {
+        puts("no more memory");
+        exit(-2);
+    }
 
     snprintf(ret, SIZE, "%lu", i);
     return ret;
@@ -37,8 +43,14 @@ char* subArr(char* one, char* two)
 
     // add one zero to see overflow
     size++;
+    size++;
     char* ret = (char*)calloc(size + 1, sizeof(char));
-    ret[size + 1] = '\0';
+    if (ret == NULL)
+    {
+        puts("no more memory");
+        exit(-2);
+    }
+    ret[size] = '\0';
     memset(ret, '0', size);
 
     char carry = 0;
@@ -68,7 +80,12 @@ char* addArr(char* one, char* two)
     // add one to size as it may be needed
     size++;
     char* ret = (char*)calloc(size + 1, sizeof(char));
-    ret[size + 1] = '\0';
+    if (ret == NULL)
+    {
+        puts("no more memory");
+        exit(-2);
+    }
+    ret[size] = '\0';
     memset(ret, '0', size);
 
     char carry = 0;
@@ -95,6 +112,11 @@ char* mulArr(char* one, char* two)
     size_t len2 = strlen(two);
     size_t size = len1 + len2;
     char* ret = (char*)calloc(size + 1, sizeof(char));
+    if (ret == NULL)
+    {
+        puts("no more memory");
+        exit(-2);
+    }
     ret[size] = '\0';
     memset(ret, '0', size - 1);
 
@@ -154,7 +176,17 @@ char* sqrtArr(char* in)
     size_t size = length + length % 2;
     int try = 0;
     char* works = (char*)calloc((size + 1), sizeof(char));
+    if (works == NULL)
+    {
+        puts("no more memory");
+        exit(-2);
+    }
     char* result = (char*)calloc((size + 1), sizeof(char));
+    if (result == NULL)
+    {
+        puts("no more memory");
+        exit(-2);
+    }
 
     size_t pos = 0;
 
@@ -172,18 +204,26 @@ char* sqrtArr(char* in)
     for (; try < 10;)
     {
         try++;
-        free(tryArr);
         tryArr = toArr(try);
-        if (greater(mulArr(tryArr, tryArr), works) > 0)
+        char* trySq = mulArr(tryArr, tryArr);
+        if (greater(trySq, works) > 0)
         {
             try--;
+            free(tryArr);
+            free(trySq);
             break;
         }
+        free(trySq);
+        free(tryArr);
     }
 
     result[0] = try + '0';
-    char* newWorks = subArr(works, mulArr(result, result));
+    char* resSq = mulArr(result, result);
+    char* newWorks = subArr(works, resSq);
+    free(resSq);
+    free(works);
     works = newWorks;
+    char* arr20 = toArr(20);
 
     while (pos < size - 1)
     {
@@ -193,24 +233,38 @@ char* sqrtArr(char* in)
         works[nullpos + 2] = '\0';
 
         size_t t = 0;
-        for (; t < 10UL; t++)
+        char arrt[2] = "0";
+        for (; arrt[0] < '9' + 1;)
         {
-            if (greater(mulArr(addArr(mulArr(toArr(20), result), toArr(t)),
-                               toArr(t)),
-                        works) > 0)
+            char* mul20 = mulArr(arr20, result);
+            char* sum20 = addArr(mul20, arrt);
+            char* mulart = mulArr(sum20, result);
+            free(mul20);
+            if (greater(mulart, works) > 0)
             {
-                t--;
+                arrt[0] -= 1;
+                free(sum20);
+                free(mulart);
                 break;
             }
+            free(sum20);
+            free(mulart);
+            arrt[0] += 1;
         }
-        newWorks = subArr(
-            works,
-            mulArr(addArr(mulArr(toArr(20), result), toArr(t)), toArr(t)));
+        char* res20 = mulArr(arr20, result);
+        char* sum20 = addArr(res20, arrt);
+        free(res20);
+        char* mulart = mulArr(sum20, arrt);
+        newWorks = subArr(works, mulart);
+        free(sum20);
+        free(mulart);
         free(works);
         works = newWorks;
         size_t reslen = strlen(result);
         result[reslen] = t + '0';
     }
+    free(arr20);
+    free(works);
 
     return result;
 }
@@ -219,18 +273,38 @@ char* closest(char* in)
 
 {
     char* sqrt = sqrtArr(in);
-    char* diff0 = subArr(in, mulArr(sqrt, sqrt));
+    char* mularr = mulArr(sqrt, sqrt);
+    char* diff0 = subArr(in, mularr);
+    free(mularr);
     char* addone = addArr(sqrt, "1");
-    char* diff1 = subArr(mulArr(addone, addone), in);
-    return (greater(diff1, diff0) >= 0) ? sqrt : addone;
+    char* mularr1 = mulArr(addone, addone);
+    char* diff1 = subArr(mularr1, in);
+    free(mularr1);
+    if (greater(diff1, diff0) >= 0)
+    {
+        free(diff0);
+        free(diff1);
+        free(addone);
+        return sqrt;
+    }
+    else
+    {
+        free(diff0);
+        free(diff1);
+        free(sqrt);
+        return addone;
+    };
 }
 
 int main(int argc, char** argv)
 {
+
     if (argc > 1)
     {
         // puts(sqrtArr(argv[1]));
-        puts(closest(argv[1]));
+        char* sqrt = closest(argv[1]);
+        puts(sqrt);
+        free(sqrt);
     }
 
     return 0;
