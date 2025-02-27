@@ -117,7 +117,7 @@ char* mulArr(char* one, char* two)
         exit(-2);
     }
     ret[size] = '\0';
-    memset(ret, '0', size - 1);
+    memset(ret, '0', size);
 
     char carry = 0;
     size_t indexout = 0;
@@ -130,7 +130,7 @@ char* mulArr(char* one, char* two)
             char digit2 = two[len2 - index2 - 1] - '0';
 
             char outdigit =
-                (ret[size - indexout - 1] - '0') + digit1 * digit2 + carry;
+                (ret[size - indexout] - '0') + digit1 * digit2 + carry;
             carry = 0;
             outdigit += '0';
             while (outdigit > '9')
@@ -138,14 +138,13 @@ char* mulArr(char* one, char* two)
                 outdigit -= 10;
                 carry += 1;
             }
-            ret[size - indexout - 1] = outdigit;
+            ret[size - indexout] = outdigit;
         }
-    }
-    if (carry)
-    {
-        size_t retlen = strlen(ret);
-        memmove(ret + 1, ret, retlen + 1);
-        ret[0] = '0' + carry;
+        if (carry)
+        {
+            ret[size - indexout - 1] = '0' + carry;
+            carry = 0;
+        }
     }
 
     return stripZeros(ret);
@@ -299,12 +298,14 @@ char* closest(char* in)
 
 int main(int argc, char** argv)
 {
-
     if (argc > 1)
     {
         // puts(sqrtArr(argv[1]));
         char* sqrt = closest(argv[1]);
-        puts(sqrt);
+        char* val = mulArr(sqrt, sqrt);
+        printf("%s %s %s\n", sqrt, val, argv[1]);
+
+        free(val);
         free(sqrt);
     }
 
