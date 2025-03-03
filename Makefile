@@ -26,7 +26,7 @@ SQRTFLAGS = -lsqrt
 # Targets
 TARGETS = \
     arbsqrt \
-    find181
+    find277
 
 LIBS = \
 	$(LIB)/libsqrt.a 
