@@ -13,6 +13,7 @@ d1>U
     1sn # init iteration term
     [
         lyln^2*ln/  # 2*y^n/n
+        p
         dlO+sO
         ln2+sn # only odd terms
         0<W     # stop when no more digits can change
@@ -25,6 +26,10 @@ lnsr # store precision of ln
 10lLxlO # calculate ln(10)
 #2lLxlO lnsm 0sO 5lLxlO +sOlO lmln+sn # calculate(ln5)+ln(2)
 lE*+ # do the smart stuff
+0k
+lr1-2/psr
+ln1-2/psn
+lPk
 lPn[ ]nlrn [ ]nlnn[ ]nn
 [ ]n
 #maximum
