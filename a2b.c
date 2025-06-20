@@ -8,18 +8,24 @@ int main(int argc, char** argv)
     int result;
     while (c = getchar(), c != EOF) // && c != 10)
     {
-        char out[9] = "00000000";
-        for (int pos = 0; pos < 8; pos++)
+        if (c == 10)
         {
-            shifted = one << (pos);
-            result = c & shifted;
-            if (result == shifted)
-            {
-                out[7 - pos] = '1';
-            }
+            puts("");
         }
-        //        printf("%d %s\n", c, out);
-        printf("%s ", out);
+        else
+        {
+            char out[9] = "00000000";
+            for (int pos = 0; pos < 8; pos++)
+            {
+                shifted = one << (pos);
+                result = c & shifted;
+                if (result == shifted)
+                {
+                    out[7 - pos] = '1';
+                }
+            }
+            //        printf("%d %s\n", c, out);
+            printf("%s ", out);
+        }
     }
-    puts("");
 }
