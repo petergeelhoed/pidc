@@ -34,7 +34,6 @@ lPn[ ]nlrn [ ]nlnn[ ]nn
 [ ]n
 #maximum
 lZ10lP_1*^lr*+
-lO10lP_1*^ln*+
-lE*+p
+lO10lP_1*^ln*+ lE*+p
 # prints out
 # precision iterations(y) iterations(10) lowerbound upperbound
