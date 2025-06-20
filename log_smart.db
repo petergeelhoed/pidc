@@ -1,0 +1,29 @@
+?dsPk 
+# stop macro
+[[uMacro]pq]sU
+[2Q]sT 
+# init number of digits -1 
+0sE  
+# divide by 10 until < 10
+[d10>TlE10<U10/lE1+dsE0<W]sW lWx
+# divide by power of 10
+[
+    d1-r1+/sy # (A-1)/(A+1)
+    1sn # init iteration term
+    [
+        lyln^ln/2*  # 2*y^n/n
+        p
+        dlO+sO
+        ln2+sn # only odd terms
+        0<W     # stop when no more digits
+    ]sW lWx
+]sL
+lLx
+lOf
+lnsr
+0sO
+# calculate ln(10)
+10lLxlOp
+lE*+ # do the smart stuff
+0n10lP_1*^ln2/*p
+
