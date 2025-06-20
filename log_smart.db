@@ -25,6 +25,7 @@ lnsr # store precision of ln
 10lLxlO
 lE*+ # do the smart stuff
 p
-10lP_1*^lr*lO*
-10lP_1*^ln*lZ*++p
-
+#maximum
+lZ10lP_1*^lr*+
+lO10lP_1*^ln*+
+lE*+p
