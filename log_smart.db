@@ -1,4 +1,5 @@
-?dsPk 
+?sP
+dZk
 # stop macro
 [[only > 1]pq]sU
 [2Q]sT 
@@ -8,12 +9,13 @@ d1>U
 # divide by 10 until < 10
 [d10>TlE10<U10/lE1+dsE0<W]sW lWx
 # divide by power of 10
+lPk
 [
     d1-r1+/sy # (A-1)/(A+1)
     1sn # init iteration term
     [
         lyln^2*ln/  # 2*y^n/n
-        p
+  p
         dlO+sO
         ln2+sn # only odd terms
         0<W     # stop when no more digits can change
@@ -27,8 +29,8 @@ lnsr # store precision of ln
 #2lLxlO lnsm 0sO 5lLxlO +sOlO lmln+sn # calculate(ln5)+ln(2)
 lE*+ # do the smart stuff
 0k
-lr1-2/psr
-ln1-2/psn
+lr1-2/sr
+ln1-2/sn
 lPk
 lPn[ ]nlrn [ ]nlnn[ ]nn
 [ ]n
