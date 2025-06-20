@@ -1,9 +1,10 @@
 ?dsPk 
 # stop macro
-[[uMacro]pq]sU
+[[only > 1]pq]sU
 [2Q]sT 
 # init number of digits -1 
-0sE  
+0sE 
+d1>U
 # divide by 10 until < 10
 [d10>TlE10<U10/lE1+dsE0<W]sW lWx
 # divide by power of 10
@@ -12,9 +13,10 @@
     1sn # init iteration term
     [
         lyln^2*ln/  # 2*y^n/n
+        p
         dlO+sO
         ln2+sn # only odd terms
-        0<W     # stop when no more digits
+        0<W     # stop when no more digits can change
     ]sW lWx
 ]sL
 lLx
@@ -24,8 +26,12 @@ lnsr # store precision of ln
 # calculate ln(10)
 10lLxlO
 lE*+ # do the smart stuff
-p
+lPn[ ]nlrn[ ]nlnn[ ]nn
+[ ]n
 #maximum
 lZ10lP_1*^lr*+
 lO10lP_1*^ln*+
 lE*+p
+
+# prints out
+# precision iterations(y) iterations(10) lowerbound upperbound
