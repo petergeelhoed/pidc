@@ -1,0 +1,38 @@
+?sRsP
+dZk
+# stop macro
+[[only > 1]pq]sU
+[2Q]sT 
+# init number of digits -1 
+0sE
+d1>U
+# divide by 2 until < 2
+[dlR>TK1+klR/lE1+dsE0<W]sW lWx
+lPk
+[
+    d1-r1+/sy # (A-1)/(A+1)
+    1sn # init iteration term
+    [
+        lyln^2*ln/  # 2*y^n/n
+# p
+        dlO+sO
+        ln2+sn # only odd terms
+        0<W     # stop when no more digits can change
+    ]sW lWx
+]sL
+lLx
+lOdsZ
+lnsr # store precision of ln
+0sO
+lRlLxlO # calculate ln(R)
+lE*+p # do the smart stuff
+0k
+lr1-2/sr
+ln1-2/sn
+lPk
+#maximum
+lZ10lP_1*^lr*+
+lO10lP_1*^ln*+ lE*+p
+r-dsYp lr ln lE + + dsX p lRp lPp lEp lrp lnp lYLX* p 
+# prints out
+# precision iterations(y) iterations(10) lowerbound upperbound
