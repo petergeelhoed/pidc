@@ -14,7 +14,6 @@ lPk
     1sn # init iteration term
     [
         lyln^2*ln/  # 2*y^n/n
-# p
         dlO+sO
         ln2+sn # only odd terms
         0<W     # stop when no more digits can change
@@ -25,14 +24,15 @@ lOdsZ
 lnsr # store precision of ln
 0sO
 lRlLxlO # calculate ln(R)
-lE*+p # do the smart stuff
+lE*+ # do the smart stuff
+n[ ]n
 0k
 lr1-2/sr
 ln1-2/sn
 lPk
 #maximum
 lZ10lP_1*^lr*+
-lO10lP_1*^ln*+ lE*+p
-r-dsYp lr ln lE + + dsX p lRp lPp lEp lrp lnp lYLX* p 
+lO10lP_1*^ln*+ lE*+n[ ]n
+lr ln lE + + p
 # prints out
-# precision iterations(y) iterations(10) lowerbound upperbound
+# precision lowerbound upperbound iterations

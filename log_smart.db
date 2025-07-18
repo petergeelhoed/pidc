@@ -25,8 +25,8 @@ lLx
 lOdsZ
 lnsr # store precision of ln
 0sO
-10lLxlO # calculate ln(10)
-#2lLxlO lnsm 0sO 5lLxlO +sOlO lmln+sn # calculate(ln5)+ln(2)
+#10lLxlO # calculate ln(10)
+2lLxlO lnsm 0sO 5lLxlO +sOlO lmln+sn # calculate(ln5)+ln(2)
 lE*+ # do the smart stuff
 0k
 lr1-2/sr
