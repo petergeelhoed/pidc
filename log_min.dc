@@ -1,0 +1,33 @@
+?sRsP
+dZk
+# stop macro
+[[only > 1]pq]sU
+[2Q]sT 
+# init number of digits 
+0sE
+d1>U
+# divide by R until < R
+# R=2 is the most efficient.
+[dlR>TK1+klR/lE1+dsE0<D]sD lDx
+lPk
+10lP_1*^se
+[
+#init max
+0sM
+    d1-r1+/sy # (A-1)/(A+1)
+    1sn # init iteration term
+    [
+        # term 2*y^n/n
+        lyln^ 2*ln/ 
+        dlO+sO
+
+        ln2+sn # only odd terms
+        le<W    # stop when no more digits can change
+    ]sW lWx
+]sL
+lLx
+lOdsZ # tot in Z
+0sO
+lRlLxlO # calculate ln(R)
+lE*+p
+
